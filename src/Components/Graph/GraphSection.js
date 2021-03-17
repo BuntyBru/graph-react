@@ -53,7 +53,6 @@ function GraphSection({ graphData }) {
       let data = graphData.items.map((x) => x.count);
       updateDataset(labels, data);
     }
-    console.log("RENDERING", graphData);
   }, [graphData]);
 
   const updateDataset = (labels, data) => {

@@ -34,9 +34,6 @@ function Clipboard(props) {
   let inputElementRef = useRef(null);
   let query = useQuery();
   const [inputElement, setInputElement] = useState(query);
-
-  console.log("hello ===>", query);
-
   const handleChange = (event) => {
     setInputElement(event.target.value);
   };

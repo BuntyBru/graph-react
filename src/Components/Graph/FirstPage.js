@@ -17,7 +17,6 @@ function FirstPage() {
   });
 
   useEffect(() => {
-    console.log("graphData", urlParams);
     let url =
       "https://api.stackexchange.com/2.2/tags?key=vUFgqWiq2tuN4KmWFwoqLg((&site=stackoverflow&" +
       urlParams;
@@ -31,14 +30,12 @@ function FirstPage() {
         .then((res) => res.json())
         .then((res) => {
           if (res.error_id) {
-            console.log("ERROR", res);
             setErrorBlock({
               message: `ERROR ${res.error_message + ", " + res.error_name}`,
               bool: true,
             });
             setGraphData({});
           } else {
-            // console.log(res);
             setGraphData(res);
           }
         })
