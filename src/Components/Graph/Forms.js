@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useFormik } from "formik";
 import { device } from "../../StyledComponents/Device";
+import { ErrorMessage } from "../../StyledComponents/Layout";
 
 const FormParent = styled.div`
   margin-bottom: 2rem;
@@ -22,7 +23,6 @@ const FormParent = styled.div`
     text-transform: uppercase;
     cursor: pointer;
   }
-
   @media ${device.laptop} {
   }
 `;
@@ -48,15 +48,33 @@ const EntryParent = styled.div`
 const validate = (values) => {
   const errors = {};
 
-  if (new Date(values.fromdate).getTime() > new Date().getTime()) {
-    console.log(
-      new Date(values.fromdate).getTime(),
-      new Date().getTimezoneOffset()
-    );
+  console.log(values);
+
+  if (dateLimit(values.fromdate)) {
     errors.fromdate = "Date more than the present date";
   }
 
+  if (dateLimit(values.todate)) {
+    errors.todate = "Date more than the present date";
+  }
+
+  if (toDateLimit(values)) {
+    errors.todate = "To Date should be more than From Date";
+  }
+
   return errors;
+};
+
+const dateLimit = (start) => {
+  return new Date(start).getTime() > new Date().getTime();
+};
+
+const toDateLimit = (obj) => {
+  if (obj.fromdate !== "" && obj.todate !== "") {
+    return new Date(obj.todate).getTime() < new Date(obj.fromdate).getTime();
+  } else {
+    return false;
+  }
 };
 
 function FormSection(props) {
@@ -100,6 +118,7 @@ function FormSection(props) {
               name="page"
               type="number"
               placeholder="Enter page"
+              min="1"
               onChange={formik.handleChange}
               value={formik.values.page}
             />
@@ -111,6 +130,7 @@ function FormSection(props) {
               id="pagesize"
               name="pagesize"
               type="number"
+              min="1"
               placeholder="Enter page number"
               onChange={formik.handleChange}
               value={formik.values.pagesize}
@@ -129,7 +149,7 @@ function FormSection(props) {
               value={formik.values.fromdate}
             />
             {formik.errors.fromdate ? (
-              <div>{formik.errors.fromdate}</div>
+              <ErrorMessage>{formik.errors.fromdate}</ErrorMessage>
             ) : null}
           </EntryParent>
 
@@ -144,6 +164,9 @@ function FormSection(props) {
               onChange={formik.handleChange}
               value={formik.values.todate}
             />
+            {formik.errors.todate ? (
+              <ErrorMessage>{formik.errors.todate}</ErrorMessage>
+            ) : null}
           </EntryParent>
         </div>
 
