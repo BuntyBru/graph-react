@@ -25,3 +25,16 @@ export const ErrorHolder = styled.div`
     font-weight: 600;
   }
 `;
+
+export const CommonBtn = styled.button`
+  margin-top: 1rem;
+  font-weight: 600;
+  background: #0f1218;
+  border: none;
+  padding: 8px 20px;
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+`;
