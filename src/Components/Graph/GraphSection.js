@@ -1,10 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import Chartjs from "chart.js";
 import styled from "styled-components";
+import { device } from "../../StyledComponents/Device";
 
 const GraphParent = styled.div`
   width: 100%;
   height: 100%;
+
+  @media ${device.mobileL} {
+    width: 1000px;
+  }
 `;
 
 const chartConfig = {

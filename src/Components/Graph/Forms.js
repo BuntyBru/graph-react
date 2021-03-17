@@ -23,7 +23,10 @@ const FormParent = styled.div`
     text-transform: uppercase;
     cursor: pointer;
   }
-  @media ${device.laptop} {
+  @media ${device.tablet} {
+    .form_child {
+      flex-direction: column;
+    }
   }
 `;
 
@@ -42,6 +45,12 @@ const EntryParent = styled.div`
   input {
     padding: 7px 10px;
     font-size: 14px;
+  }
+
+  @media ${device.tablet} {
+    input {
+      margin-bottom: 1rem;
+    }
   }
 `;
 

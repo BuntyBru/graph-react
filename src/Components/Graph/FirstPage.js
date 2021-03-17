@@ -2,22 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Layout, ErrorHolder } from "../../StyledComponents/Layout";
 import FormSection from "./Forms";
 import GraphSection from "./GraphSection";
+import styled from "styled-components";
 
-const ErrorHandler = (message, bool) => {
-  if (bool) {
-    return (
-      <ErrorHolder display="block">
-        <p>{message}</p>
-      </ErrorHolder>
-    );
-  } else {
-    return (
-      <ErrorHolder display="none">
-        <p>{message}</p>
-      </ErrorHolder>
-    );
-  }
-};
+const Wrapper = styled.div`
+  overflow: auto;
+`;
 
 function FirstPage() {
   const [urlParams, setUrlParams] = useState("");
@@ -79,7 +68,9 @@ function FirstPage() {
       ) : (
         <></>
       )}
-      <GraphSection graphData={graphData} />
+      <Wrapper>
+        <GraphSection graphData={graphData} />
+      </Wrapper>
     </Layout>
   );
 }
