@@ -13,3 +13,15 @@ export const ErrorMessage = styled.p`
   font-weight: 600;
   margin-top: 7px;
 `;
+
+export const ErrorHolder = styled.div`
+  background: #ff71713d;
+  padding: 10px 20px;
+
+  & p {
+    margin: 0px;
+    font-size: 13px;
+    color: #ff7171;
+    font-weight: 600;
+  }
+`;

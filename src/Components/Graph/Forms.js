@@ -47,21 +47,15 @@ const EntryParent = styled.div`
 
 const validate = (values) => {
   const errors = {};
-
-  console.log(values);
-
   if (dateLimit(values.fromdate)) {
     errors.fromdate = "Date more than the present date";
   }
-
   if (dateLimit(values.todate)) {
     errors.todate = "Date more than the present date";
   }
-
   if (toDateLimit(values)) {
     errors.todate = "To Date should be more than From Date";
   }
-
   return errors;
 };
 
@@ -103,8 +97,6 @@ function FormSection(props) {
       } else {
         props.callback("");
       }
-
-      console.log(values, asString);
     },
   });
   return (

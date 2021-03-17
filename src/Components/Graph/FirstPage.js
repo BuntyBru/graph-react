@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Layout } from "../../StyledComponents/Layout";
+import { Layout, ErrorHolder } from "../../StyledComponents/Layout";
 import FormSection from "./Forms";
 import GraphSection from "./GraphSection";
+
+const ErrorHandler = (message, bool) => {
+  if (bool) {
+    return (
+      <ErrorHolder display="block">
+        <p>{message}</p>
+      </ErrorHolder>
+    );
+  } else {
+    return (
+      <ErrorHolder display="none">
+        <p>{message}</p>
+      </ErrorHolder>
+    );
+  }
+};
 
 function FirstPage() {
   const [urlParams, setUrlParams] = useState("");
   const [graphData, setGraphData] = useState({});
+  const [errorBlock, setErrorBlock] = useState({
+    message: "",
+    bool: false,
+  });
 
   useEffect(() => {
     console.log("graphData", urlParams);
@@ -14,11 +34,19 @@ function FirstPage() {
       urlParams;
     const abortController = new AbortController();
     const fetchData = async () => {
+      setErrorBlock({
+        message: "",
+        bool: false,
+      });
       fetch(url, { signal: abortController.signal })
         .then((res) => res.json())
         .then((res) => {
           if (res.error_id) {
             console.log("ERROR", res);
+            setErrorBlock({
+              message: `ERROR ${res.error_message + ", " + res.error_name}`,
+              bool: true,
+            });
             setGraphData({});
           } else {
             // console.log(res);
@@ -27,7 +55,10 @@ function FirstPage() {
         })
         .catch((e) => {
           if (!abortController.signal.aborted) {
-            console.log("Error has happened", e);
+            setErrorBlock({
+              message: e,
+              bool: true,
+            });
           }
         });
     };
@@ -41,6 +72,13 @@ function FirstPage() {
   return (
     <Layout>
       <FormSection callback={setUrlParams} />
+      {errorBlock.bool ? (
+        <ErrorHolder>
+          <p>{errorBlock.message}</p>
+        </ErrorHolder>
+      ) : (
+        <></>
+      )}
       <GraphSection graphData={graphData} />
     </Layout>
   );
